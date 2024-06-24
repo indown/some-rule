@@ -48,80 +48,93 @@ h5.ele.me
 > 第 2 条脚本是签到脚本, 每天`00:05:00`执行一次.
 */
 
-
-
-const CookieName = '115'
-const sy = init()
+const CookieName = "115";
+const sy = init();
 GetCookie();
 
 function GetCookie() {
-  console.log(123)
   if ($request.headers) {
-    var CookieValue = $request.headers['Cookie'];
-    sy.msg("更新" + CookieValue + "Cookie失败‼️", "", ""); 
-    console.log(CookieValue)
-    // if (sy.getdata(CookieKey) != (undefined || null)) {
-    //   if (sy.getdata(CookieKey) != CookieValue) {
-    //     var cookie = sy.setdata(CookieValue, CookieKey);
-    //     if (!cookie) {
-    //       sy.msg("更新" + CookieName + "Cookie失败‼️", "", "");
-    //     } else {
-    //       sy.msg("更新" + CookieName + "Cookie成功 🎉", "", "");
-    //     }
-    //   }
-    // } else {
-    //   var cookie = sy.setdata(CookieValue, CookieKey);
-    //   if (!cookie) {
-    //     sy.msg("首次写入" + CookieName + "Cookie失败‼️", "", "");
-    //   } else {
-    //     sy.msg("首次写入" + CookieName + "Cookie成功 🎉", "", "");
-    //   }
-    // }
+    var CookieValue = $request.headers["Cookie"];
+    const obj = format(CookieValue)
+    const res = ['UID','CID','SEID'].map((item) => {
+      return `${item}=${obj[item]}`
+    }).join(';')
+    console.log(res)
+    sy.msg("更新" + res + "Cookie‼️", "", "");
+   
   } else {
-    sy.msg("写入" + CookieName + "Cookie失败‼️", "", "配置错误, 无法读取请求头, ");
+    sy.msg(
+      "写入" + CookieName + "Cookie失败‼️",
+      "",
+      "配置错误, 无法读取请求头, "
+    );
   }
+}
+function format(inputString) {
+  const keyValuePairs = inputString.split(";");
+
+  // 2. 初始化一个空对象
+  const result = {};
+
+  // 3. 遍历每个键值对，去除空格并根据等号拆分
+  keyValuePairs.forEach((pair) => {
+    // 去除前后的空格
+    const trimmedPair = pair.trim();
+
+    // 如果trimmedPair不为空
+    if (trimmedPair) {
+      // 根据等号拆分成键和值
+      const [key, value] = trimmedPair.split("=");
+
+      // 存储到对象中
+      if (key && value) {
+        result[key.trim()] = value.trim();
+      }
+    }
+  });
+  return result
 }
 function init() {
   isSurge = () => {
-    return undefined === this.$httpClient ? false : true
-  }
+    return undefined === this.$httpClient ? false : true;
+  };
   isQuanX = () => {
-    return undefined === this.$task ? false : true
-  }
+    return undefined === this.$task ? false : true;
+  };
   getdata = (key) => {
-    if (isSurge()) return $persistentStore.read(key)
-    if (isQuanX()) return $prefs.valueForKey(key)
-  }
+    if (isSurge()) return $persistentStore.read(key);
+    if (isQuanX()) return $prefs.valueForKey(key);
+  };
   setdata = (key, val) => {
-    if (isSurge()) return $persistentStore.write(key, val)
-    if (isQuanX()) return $prefs.setValueForKey(key, val)
-  }
+    if (isSurge()) return $persistentStore.write(key, val);
+    if (isQuanX()) return $prefs.setValueForKey(key, val);
+  };
   msg = (title, subtitle, body) => {
-    if (isSurge()) $notification.post(title, subtitle, body)
-    if (isQuanX()) $notify(title, subtitle, body)
-  }
-  log = (message) => console.log(message)
+    if (isSurge()) $notification.post(title, subtitle, body);
+    if (isQuanX()) $notify(title, subtitle, body);
+  };
+  log = (message) => console.log(message);
   get = (url, cb) => {
     if (isSurge()) {
-      $httpClient.get(url, cb)
+      $httpClient.get(url, cb);
     }
     if (isQuanX()) {
-      url.method = 'GET'
-      $task.fetch(url).then((resp) => cb(null, {}, resp.body))
+      url.method = "GET";
+      $task.fetch(url).then((resp) => cb(null, {}, resp.body));
     }
-  }
+  };
   post = (url, cb) => {
     if (isSurge()) {
-      $httpClient.post(url, cb)
+      $httpClient.post(url, cb);
     }
     if (isQuanX()) {
-      url.method = 'POST'
-      $task.fetch(url).then((resp) => cb(null, {}, resp.body))
+      url.method = "POST";
+      $task.fetch(url).then((resp) => cb(null, {}, resp.body));
     }
-  }
+  };
   done = (value = {}) => {
-    $done(value)
-  }
-  return { isSurge, isQuanX, msg, log, getdata, setdata, get, post, done }
+    $done(value);
+  };
+  return { isSurge, isQuanX, msg, log, getdata, setdata, get, post, done };
 }
-sy.done()
+sy.done();
