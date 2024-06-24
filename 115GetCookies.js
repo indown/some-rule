@@ -55,30 +55,30 @@ const sy = init()
 GetCookie();
 
 function GetCookie() {
-  sy.msg("更新" + 1 + "Cookie失败‼️", "", ""); 
-  // if ($request.headers) {
-  //   var CookieValue = $request.headers['Cookie'];
-  //   sy.msg("更新" + CookieValue + "Cookie失败‼️", "", ""); 
-  //   // if (sy.getdata(CookieKey) != (undefined || null)) {
-  //   //   if (sy.getdata(CookieKey) != CookieValue) {
-  //   //     var cookie = sy.setdata(CookieValue, CookieKey);
-  //   //     if (!cookie) {
-  //   //       sy.msg("更新" + CookieName + "Cookie失败‼️", "", "");
-  //   //     } else {
-  //   //       sy.msg("更新" + CookieName + "Cookie成功 🎉", "", "");
-  //   //     }
-  //   //   }
-  //   // } else {
-  //   //   var cookie = sy.setdata(CookieValue, CookieKey);
-  //   //   if (!cookie) {
-  //   //     sy.msg("首次写入" + CookieName + "Cookie失败‼️", "", "");
-  //   //   } else {
-  //   //     sy.msg("首次写入" + CookieName + "Cookie成功 🎉", "", "");
-  //   //   }
-  //   // }
-  // } else {
-  //   sy.msg("写入" + CookieName + "Cookie失败‼️", "", "配置错误, 无法读取请求头, ");
-  // }
+  console.log(123)
+  if ($request.headers) {
+    var CookieValue = $request.headers['Cookie'];
+    sy.msg("更新" + CookieValue + "Cookie失败‼️", "", ""); 
+    // if (sy.getdata(CookieKey) != (undefined || null)) {
+    //   if (sy.getdata(CookieKey) != CookieValue) {
+    //     var cookie = sy.setdata(CookieValue, CookieKey);
+    //     if (!cookie) {
+    //       sy.msg("更新" + CookieName + "Cookie失败‼️", "", "");
+    //     } else {
+    //       sy.msg("更新" + CookieName + "Cookie成功 🎉", "", "");
+    //     }
+    //   }
+    // } else {
+    //   var cookie = sy.setdata(CookieValue, CookieKey);
+    //   if (!cookie) {
+    //     sy.msg("首次写入" + CookieName + "Cookie失败‼️", "", "");
+    //   } else {
+    //     sy.msg("首次写入" + CookieName + "Cookie成功 🎉", "", "");
+    //   }
+    // }
+  } else {
+    sy.msg("写入" + CookieName + "Cookie失败‼️", "", "配置错误, 无法读取请求头, ");
+  }
 }
 function init() {
   isSurge = () => {
