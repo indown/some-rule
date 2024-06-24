@@ -59,6 +59,7 @@ function GetCookie() {
   if ($request.headers) {
     var CookieValue = $request.headers['Cookie'];
     sy.msg("更新" + CookieValue + "Cookie失败‼️", "", ""); 
+    console.log(CookieValue)
     // if (sy.getdata(CookieKey) != (undefined || null)) {
     //   if (sy.getdata(CookieKey) != CookieValue) {
     //     var cookie = sy.setdata(CookieValue, CookieKey);
