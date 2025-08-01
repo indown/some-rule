@@ -56,7 +56,7 @@ function GetCookie() {
   if ($request.headers) {
     var CookieValue = $request.headers["Cookie"];
     const obj = format(CookieValue)
-    const res = ['UID','CID','SEID'].map((item) => {
+    const res = ['UID','CID','SEID', 'KID', 'PHPSESSID', 'USERSESSIONID'].map((item) => {
       return `${item}=${obj[item]}`
     }).join(';')
     console.log(res)
@@ -138,3 +138,4 @@ function init() {
   return { isSurge, isQuanX, msg, log, getdata, setdata, get, post, done };
 }
 sy.done();
+
