@@ -57,8 +57,10 @@ function GetCookie() {
     var CookieValue = $request.headers["Cookie"];
     const obj = format(CookieValue)
     const res = ['UID','CID','SEID', 'KID', 'PHPSESSID', 'USERSESSIONID'].map((item) => {
-      return `${item}=${obj[item]}`
-    }).join(';')
+      if(obj[item]) {
+         return `${item}=${obj[item]}`
+      }
+    }).filter(Boolean).join(';')
     console.log(res)
     sy.msg("更新" + res + "Cookie‼️", "", "");
    
@@ -138,4 +140,5 @@ function init() {
   return { isSurge, isQuanX, msg, log, getdata, setdata, get, post, done };
 }
 sy.done();
+
 
